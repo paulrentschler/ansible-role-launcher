@@ -1,2 +1,22 @@
 ---
-# defaults file for launcher
+# defaults for launcher related variables
+
+# specify the parent directory for the Launcher script
+launcher_parent_dir: "/usr/local/scripts"
+
+# specify the directory that the Launcher script will be cloned into
+launcher_install_dir: "{{ launcher_parent_dir }}/launcher"
+
+# configure the launcher script with all of the hosts
+#   in the current Ansible inventory
+# this can also just be a list of hosts from the Ansible inventory
+launcher_inventory_hosts: "{{ groups['all'] }}"
+
+# specify hosts for the launcher configuration
+#   Example:
+#     launcher_hosts:
+#       - host1:
+#           fqdn: host1.example.com
+#           ip: 192.168.10.1
+#           port: 2222
+launcher_hosts: []

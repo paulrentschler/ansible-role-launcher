@@ -1,2 +1,32 @@
 ---
-# tasks file for launcher
+# Tasks to install and configure the launcher script
+
+- name: create the scripts directory
+  ansible.builtin.file:
+    path: "{{ launcher_parent_dir }}"
+    owner: "{{ devops_user|default(ansible_user) }}"
+    group: "{{ devops_group|default(adm) }}"
+    mode: 0775
+    state: directory
+  become: yes
+
+- name: clone the script
+  ansible.builtin.git:
+    repo: "https://github.com/paulrentschler/launcher.git"
+    dest: "{{ launcher_install_dir }}"
+
+- name: symlink for global execution
+  ansible.builtin.file:
+    src: "{{ launcher_install_dir }}/go.py"
+    dest: "/usr/local/bin/go"
+    state: link
+  become: yes
+
+- name: configure with inventory hosts
+  ansible.builtin.template:
+    src: "hosts.j2"
+    dest: "{{ launcher_install_dir }}/hosts.py"
+    owner: "{{ devops_user|default(ansible_user) }}"
+    group: "{{ devops_group|default(adm) }}"
+    mode: 0664
+  when: launcher_inventory_hosts or launcher_hosts

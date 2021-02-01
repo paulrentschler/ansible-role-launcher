@@ -1,0 +1,26 @@
+"""This file specifies the hosts used by the go.py script.
+
+Copy this file to settings.py and then add the hosts you want to connect
+and tunnel to as individual dictionary entries within the HOSTS list.
+"""
+
+# {{ ansible_managed }}
+
+HOSTS = [
+{% for _item in launcher_inventory_hosts %}
+    {
+        'nickname': '{{ _item }}',
+        'fqdn':     '{{ hostvars[_item]['inventory_hostname']|default:'' }}',
+        'ip':       '{{ hostvars[_item]['ansible_host']|default:'' }}',
+        'port':     '{{ hostvars[_item]['ansible_port']|default:22 }}',
+    },
+{% endfor %}
+{% for _item in launcher_hosts %}
+    {
+        'nickname': '{{ _item }}',
+        'fqdn':     '{{ _item.fqdn|default:'' }}',
+        'ip':       '{{ _item.ip|default:'' }}',
+        'port':     '{{ _item.port|default:22 }}',
+    },
+{% endfor %}
+]

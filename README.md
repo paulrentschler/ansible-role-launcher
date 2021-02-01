@@ -1,38 +1,95 @@
-Role Name
-=========
+paulrentschler.launcher
+=======================
 
-A brief description of the role goes here.
+Install and configure the SSH connection/tunnel launcher script
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables are available with defaults defined in `defaults/main.yml`:
+
+Specify the parent directory for the Launcher script.
+
+    launcher_parent_dir: "/usr/local/scripts"
+
+Specify the directory that the Launcher script will be cloned into.
+
+    launcher_install_dir: "{{ launcher_parent_dir }}/launcher"
+
+Configure the launcher script with hosts from the Ansible inventory. By default it will include all of the hosts but you can also specify a list of specific hosts you want to configure from the Ansible inventory.
+
+    launcher_inventory_hosts: "{{ groups['all'] }}"
+
+Specify servers for the launcher configuration.
+
+    launcher_hosts: []
+
+An example of how this varible would be defined:
+
+    launcher_servers:
+      - nickname1:
+          fqdn: host1.example.com
+          ip: 192.168.10.1
+          port: 2222
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+By default the parent directory for the launcher script and the cloned repo with the launcher script will be owned by the `devops_user` variable if defined, otherwise `ansible_user` by default.
+
+The group will be `devops_group` if defined, otherwise `adm` by default.
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Simpliest example that uses defaults to install and configure the launcher with all of the Ansible inventory hosts.
 
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+        - paulrentschler.launcher
+
+Install the launcher script but **do not** configure the Ansible inventory hosts.
+
+    - hosts: all
+      roles:
+        - role: paulrentschler.launcher
+          vars:
+            launcher_inventory_hosts: []
+
+Install the launcher script, configure some of the Ansible inventory hosts, and specify additional hosts.
+
+    - hosts: all
+      roles:
+        - role: paulrentschler.launcher
+          vars:
+            launcher_inventory_hosts:
+              - host1
+              - host5
+            launcher_hosts:
+              - nickname1:
+                  fqdn: host1.example.com
+                  ip: 192.168.10.1
+                  port: 2222
+              - nickname2:
+                  ip: 192.168.10.15
+
 
 License
 -------
 
-BSD
+MIT
+
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Created by Paul Rentschler in 2021.
