@@ -1,6 +1,8 @@
 paulrentschler.launcher
 =======================
 
+[![MIT licensed][mit-badge]][mit-link]
+
 Install and configure the SSH connection/tunnel launcher script
 
 
@@ -86,10 +88,14 @@ Install the launcher script, configure some of the Ansible inventory hosts, and 
 License
 -------
 
-MIT
+[MIT][mit-link]
 
 
 Author Information
 ------------------
 
 Created by Paul Rentschler in 2021.
+
+
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[mit-link]: https://github.com/paulrentschler/ansible-role-launcher/blob/master/LICENSE
