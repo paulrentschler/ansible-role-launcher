@@ -8,12 +8,14 @@ and tunnel to as individual dictionary entries within the HOSTS list.
 
 HOSTS = [
 {% for _item in launcher_inventory_hosts %}
+{% if _item != ansible_hostname %}
     {
         'nickname': '{{ _item }}',
-        'fqdn':     '{{ hostvars[_item]['inventory_hostname']|default('') }}',
+        'fqdn':     '{{ hostvars[_item]['ansible_fqdn']|default('') }}',
         'ip':       '{{ hostvars[_item]['ansible_host']|default('') }}',
         'port':     '{{ hostvars[_item]['ansible_port']|default(22) }}',
     },
+{% endif %}
 {% endfor %}
 {% for _item in launcher_hosts %}
     {
