@@ -30,3 +30,6 @@
     group: "{{ devops_group|default(adm) }}"
     mode: 0664
   when: launcher_inventory_hosts or launcher_hosts
+  tags:
+    - launcher_update_hosts
+
