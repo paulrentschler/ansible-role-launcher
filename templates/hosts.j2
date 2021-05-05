@@ -19,7 +19,7 @@ HOSTS = [
 {% endfor %}
 {% for _item in launcher_hosts %}
     {
-        'nickname': '{{ _item }}',
+        'nickname': '{{ _item.nickname|default('') }}',
         'fqdn':     '{{ _item.fqdn|default('') }}',
         'ip':       '{{ _item.ip|default('') }}',
         'port':     '{{ _item.port|default(22) }}',
