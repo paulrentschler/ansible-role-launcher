@@ -11,7 +11,7 @@ HOSTS = [
 {% if _item != ansible_hostname %}
     {
         'nickname': '{{ _item }}',
-        'fqdn':     '{{ hostvars[_item]['ansible_fqdn']|default('') }}',
+        'fqdn':     '{{ hostvars[_item]['ansible_fqdn']|default('')|replace('lcoalhost', '') }}',
         'ip':       '{{ hostvars[_item]['ansible_host']|default('') }}',
         'port':     '{{ hostvars[_item]['ansible_port']|default(22) }}',
     },
@@ -20,7 +20,7 @@ HOSTS = [
 {% for _item in launcher_hosts %}
     {
         'nickname': '{{ _item.nickname|default('') }}',
-        'fqdn':     '{{ _item.fqdn|default('') }}',
+        'fqdn':     '{{ _item.fqdn|default('')|replace('localhost', '') }}',
         'ip':       '{{ _item.ip|default('') }}',
         'port':     '{{ _item.port|default(22) }}',
     },
