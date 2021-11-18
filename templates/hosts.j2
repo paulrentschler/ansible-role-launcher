@@ -11,7 +11,7 @@ HOSTS = [
 {% if _item != ansible_hostname %}
     {
         'nickname': '{{ _item }}',
-        'fqdn':     '{{ hostvars[_item]['ansible_fqdn']|default('')|replace('lcoalhost', '') }}',
+        'fqdn':     '{{ hostvars[_item]['ansible_fqdn']|default('')|replace('localhost', '') }}',
         'ip':       '{{ hostvars[_item]['ansible_host']|default('') }}',
         'port':     '{{ hostvars[_item]['ansible_port']|default(22) }}',
     },
