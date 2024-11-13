@@ -6,6 +6,8 @@ and tunnel to as individual dictionary entries within the HOSTS list.
 
 # {{ ansible_managed }}
 
+PREFIXES = {{ launcher_prefixes }}
+
 HOSTS = [
 {% for _item in launcher_inventory_hosts %}
 {% if _item != ansible_hostname %}

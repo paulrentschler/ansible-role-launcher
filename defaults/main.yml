@@ -20,3 +20,6 @@ launcher_inventory_hosts: "{{ groups['all'] }}"
 #           ip: 192.168.10.1
 #           port: 2222
 launcher_hosts: []
+
+# specify prefixes that should be removed from host nicknames
+launcher_prefixes: []
